@@ -1,10 +1,15 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { View, Text, Image } from 'react-native';
-import { HeartOutlined } from '@ant-design/icons';
+import { HeartOutlined,HeartFilled } from '@ant-design/icons';
 import { Pressable } from 'react-native';
 
 
-export default function App({route,navigation}) {
+export default function App({ route, navigation }) {
+    const [isLiked, setIsLiked] = useState(false);
+
+    const handleLikePress = () => {
+        setIsLiked(!isLiked);
+    };
     return (
         <View style={{ flex: 1, padding: 15 }}>
             <View style={{
@@ -21,7 +26,7 @@ export default function App({route,navigation}) {
                     }}>
                 </Image>
             </View>
-            <View style={{ width: '100%', height: '50%' ,justifyContent:'space-around'}}>
+            <View style={{ width: '100%', height: '50%', justifyContent: 'space-around' }}>
                 <Text style={{
                     fontSize: 35,
                     fontWeight: '500'
@@ -44,14 +49,22 @@ export default function App({route,navigation}) {
                 <Text style={{ fontSize: 22, color: 'gray', fontWeight: 500 }}>
                     {route.params.description}
                 </Text>
-                <View style={{width:'100%',justifyContent:'space-between',flexDirection:'row'}}>
-                    <HeartOutlined style={{fontSize:50}}/>
-                    <Pressable 
-                    onPress={()=> {
-                        navigation.navigate('Screen2')
-                    }}
-                    style={{width:'80%',backgroundColor:'#E94141',height:55,borderRadius:30,justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{fontSize:24,color:'#fff',fontWeight:600}}>
+                <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <Pressable onPress={()=>{
+                        handleLikePress();
+                    }}>
+                        {isLiked ? (
+                            <HeartFilled style={{ color: 'red', fontSize: 50 }} />
+                        ) : (
+                            <HeartOutlined style={{ color: 'black', fontSize: 50 }} />
+                        )}
+                    </Pressable>
+                    <Pressable
+                        onPress={() => {
+                            navigation.navigate('Screen2')
+                        }}
+                        style={{ width: '80%', backgroundColor: '#E94141', height: 55, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 24, color: '#fff', fontWeight: 600 }}>
                             Add to cart
                         </Text>
                     </Pressable>

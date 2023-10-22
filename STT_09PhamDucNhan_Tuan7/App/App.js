@@ -20,7 +20,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}
-      initialRouteName='Screen2'>
+      initialRouteName='Screen1'>
         <Tab.Screen name="Screen1" component={Screen1} />
         <Tab.Screen name="Screen2" component={Screen2} />
       </Tab.Navigator>

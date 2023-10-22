@@ -1,7 +1,7 @@
 import React, {useState } from 'react';
 import { ScrollView } from 'react-native';
 import { View, Text, Image, Pressable, FlatList } from 'react-native';
-import { HeartFilled } from '@ant-design/icons';
+import { HeartFilled,HeartOutlined } from '@ant-design/icons';
 
 const data = [
     { id: 1, name: 'Pinarello Blue', price: 1800, img: require('../assets/xe1.png'), description: 'It is a very important form of writing as we write almost everything in paragraphs, be it an answer, essay, story, emails, etc.' },
@@ -18,6 +18,8 @@ const data = [
 export default function App({navigation}) {
     const [selectedMenu, setSelectedMenu] = useState('ALL');
     const [filteredData, setFilteredData] = useState(data);
+    const [isLiked, setIsLiked] = useState(true);
+
 
     const handleSearch = (text) => {
         const filteredProducts = data.filter(item =>
@@ -43,15 +45,27 @@ export default function App({navigation}) {
             marginBottom: 20, 
             marginRight: 32
         }}>
-            <HeartFilled
+            <Pressable style={{
+                top: 4,
+                left: 4,
+                position: 'absolute',
+            }}>
+            {isLiked ? (
+                <HeartFilled
                 style={{
-                    top: 4,
-                    left: 4,
                     fontSize: 24,
-                    position: 'absolute',
                     padding: 5,
                     color: 'red'
                 }} />
+            ):(
+                <HeartOutlined
+                style={{
+                    fontSize: 24,
+                    padding: 5,
+                    color: 'black'
+                }} />
+            )}
+            </Pressable>
             <Image resizeMode='contain' style={{ width: '80%', height: '70%' }} source={item.img} />
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ fontSize: 20 }}>
