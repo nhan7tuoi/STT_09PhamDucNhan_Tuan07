@@ -1,38 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, Pressable, ScrollView, Image, FlatList } from "react-native";
 import { SearchOutlined } from '@ant-design/icons';
 
-const data = [
-    {
-        id: '1', img: require('../assets/yellow.png'), name: 'Yellow Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '10'
-    },
-    {
-        id: '2', img: require('../assets/red.png'), name: 'Red Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '20'
-    },
-    {
-        id: '3', img: require('../assets/green.png'), name: 'Green Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '30'
-    },
-    {
-        id: '4', img: require('../assets/pink.png'), name: 'Pink Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '40'
-    },
-    {
-        id: '5', img: require('../assets/yellow.png'), name: 'Yellow Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '10'
-    },
-    {
-        id: '6', img: require('../assets/red.png'), name: 'Red Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '20'
-    },
-    {
-        id: '7', img: require('../assets/green.png'), name: 'Green Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '30'
-    },
-    {
-        id: '8', img: require('../assets/pink.png'), name: 'Pink Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '40'
-    }
-]
+// const data = [
+//     {
+//         id: '1', img: require('../assets/yellow.png'), name: 'Yellow Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '10'
+//     },
+//     {
+//         id: '2', img: require('../assets/red.png'), name: 'Red Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '20'
+//     },
+//     {
+//         id: '3', img: require('../assets/green.png'), name: 'Green Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '30'
+//     },
+//     {
+//         id: '4', img: require('../assets/pink.png'), name: 'Pink Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '40'
+//     },
+//     {
+//         id: '5', img: require('../assets/yellow.png'), name: 'Yellow Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '10'
+//     },
+//     {
+//         id: '6', img: require('../assets/red.png'), name: 'Red Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '20'
+//     },
+//     {
+//         id: '7', img: require('../assets/green.png'), name: 'Green Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '30'
+//     },
+//     {
+//         id: '8', img: require('../assets/pink.png'), name: 'Pink Donut', title: 'Spicy tasty donut family', desc: 'Order a Large Pizza but the size is the equivalent of a medium small from other places at the same price range.', price: '40'
+//     }
+// ]
 
 export default function App({ navigation }) {
     const [selectedButton, setSelectedButton] = useState('Donut');
 
-    const [filteredData, setFilteredData] = useState(data);
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(()=>{
+        fetch('https://650663f03a38daf4803e724d.mockapi.io/phamducnhan/donut')
+        .then((response)=>response.json())
+        .then((json)=>setFilteredData(json))
+    },[])
 
     const handleSearch = (text) => {
         const filteredProducts = data.filter(item =>
@@ -41,7 +47,7 @@ export default function App({ navigation }) {
         console.log(filteredProducts);
         setFilteredData(filteredProducts);
     };
-
+console.log(filteredData)
 
     const renderItems = ({ item }) => (
         <View style={{ marginBottom: 20, width: '100%', height: 120, padding: 5, flexDirection: 'row', backgroundColor: '#F4DDDD' }}>
@@ -49,7 +55,7 @@ export default function App({ navigation }) {
                 <Image
                     style={{ width: '100%', height: '95%' }}
                     resizeMode="contain"
-                    source={item.img}></Image>
+                    source={{uri:item.img}}></Image>
             </View>
             <View style={{ width: '50%', height: 115, justifyContent: 'space-around', paddingLeft: 10 }}>
                 <Text style={{ fontSize: 24, fontWeight: 700 }}>{item.name}</Text>
